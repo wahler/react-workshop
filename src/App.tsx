@@ -1,24 +1,33 @@
 import React from 'react';
-import logo from './logo.svg';
+import { Route, Switch, Redirect, NavLink } from 'react-router-dom';
 import './App.css';
+import { BookList } from './components/BookList';
+import { BookDetail } from './components/BookDetail';
+import { Counter } from './components/Counter';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <nav>
+        <ul>
+          <li>
+            <NavLink to='/counter'>Counter</NavLink>
+          </li>
+          <li>
+            <NavLink to='/books'>Book List</NavLink>
+          </li>
+        </ul>
+      </nav>
+
+      <div className='container'>
+        <Switch>
+          <Route exact path='/counter' component={Counter} />
+          <Route exact path='/books' component={BookList} />
+          <Route path='/books/:isbn' component={BookDetail} />
+
+          <Redirect to='/books' />
+        </Switch>
+      </div>
     </div>
   );
 }
