@@ -4,6 +4,7 @@ import './App.css';
 import { BookList } from './components/BookList';
 import { BookDetail } from './components/BookDetail';
 import { Counter } from './components/Counter';
+import { BookEdit } from './components/BookEdit';
 
 function App() {
   return (
@@ -23,7 +24,8 @@ function App() {
         <Switch>
           <Route exact path='/counter' component={Counter} />
           <Route exact path='/books' component={BookList} />
-          <Route path='/books/:isbn' component={BookDetail} />
+          <Route exact path='/books/:isbn' component={BookDetail} />
+          <Route exact path='/books/:isbn/edit' component={BookEdit} />
 
           <Redirect to='/books' />
         </Switch>

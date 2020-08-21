@@ -1,5 +1,5 @@
 import React from 'react';
-import { match } from 'react-router-dom';
+import { match, Link } from 'react-router-dom';
 import { useBook } from '../hooks/useBook';
 
 interface RouteParams {
@@ -25,6 +25,8 @@ export const BookDetail: React.FC<Props> = ({ match: { params: { isbn }} }) => {
           <div>Subtitle: {book.title}</div>
           <div>ISBN: {book.isbn}</div>
           <div>Abstract: {book.abstract}</div>
+
+          <Link to={`/books/${isbn}/edit`}>Edit</Link>
         </>
       )}
     </div>
