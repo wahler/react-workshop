@@ -22,7 +22,7 @@ export const BookDetail: React.FC<Props> = ({ match: { params: { isbn }} }) => {
       {book && (
         <>
           <div>Title: {book.title}</div>
-          <div>Subtitle: {book.title}</div>
+          <div>Subtitle: {book.subtitle}</div>
           <div>ISBN: {book.isbn}</div>
           <div>Abstract: {book.abstract}</div>
 
