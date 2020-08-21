@@ -1,45 +1,49 @@
-import React, { useState, FormEvent } from 'react';
+import React from 'react';
 import { Book } from './BookListItem';
+import { useForm} from 'react-hook-form'
 
 interface Props {
   book: Book;
+  onBookSubmit?: (book: any) => void
 }
 
-export const BookForm: React.FC<Props> = ({ book }) => {
-  const [title, setTitle] = useState<string>(book.title);
-  const [isbn, setIsbn] = useState<string>(book.isbn);
+export const BookForm: React.FC<Props> = ({ book, onBookSubmit = () => {} }) => {
+  const { register, handleSubmit, errors } = useForm({ defaultValues: book });
 
-  const handleSubmit = (event: FormEvent) => {
-    event.preventDefault();
-
+  const onSubmit = (data: any) => {
+    onBookSubmit(data);
   }
 
   return (
-    <form style={{marginTop: '2rem'}} onSubmit={handleSubmit}>
-      <div className="form-control">
-        <input
-          name='isbn'
-          placeholder='isbn'
-          value={isbn}
-          onChange={(event) => {
-            setIsbn(event.target.value);
-          }}
-        />
+    <form style={{ marginTop: '2rem' }} onSubmit={handleSubmit(onSubmit)}>
+      <div className='form-control'>
+        <input type='text' name='isbn' placeholder='isbn' ref={register} />
       </div>
 
-      <div className="form-control">
+      <div className='form-control'>
         <input
+          type='text'
           name='title'
           placeholder='title'
-          value={title}
-          onChange={(event) => {
-            setTitle(event.target.value);
-          }}
+          ref={register({ required: true })}
+          style={{ borderColor: errors.title ? 'red' : 'inherit' }}
         />
       </div>
 
+      <div className='form-control'>
+        <input
+          type='text'
+          name='subtitle'
+          placeholder='subtitle'
+          ref={register}
+        />
+      </div>
 
-      <button type="submit">Save</button>
+      <div className='form-control'>
+        <textarea name='abstract' ref={register} />
+      </div>
+
+      <button type='submit'>Save</button>
     </form>
   );
 }

@@ -12,11 +12,23 @@ interface Props {
 }
 
 export const BookEdit: React.FC<Props> = ({ match: { params: { isbn } } }) => {
-         const { book } = useBook(isbn);
+  const { book } = useBook(isbn);
 
-         return (
-           <div>
-             {book && <BookForm book={book} />}
-           </div>
-         );
-       };
+  const handleBookSubmit = (data: any) => {
+    const payload = {
+      ...book,
+      ...data,
+    }
+
+    fetch(`http://localhost:4730/books/${isbn}`, {
+      method: 'put',
+      body: JSON.stringify(payload),
+    })
+  }
+
+  return (
+    <div>
+      {book && <BookForm book={book} onBookSubmit={handleBookSubmit} />}
+    </div>
+  );
+};
