@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React from 'react';
 import { match } from 'react-router-dom';
-import { Book } from './BookListItem';
+import { useBook } from '../hooks/useBook';
 
 interface RouteParams {
   isbn: string
@@ -11,22 +11,11 @@ interface Props {
 }
 
 export const BookDetail: React.FC<Props> = ({ match: { params: { isbn }} }) => {
-  const [book, setBook] = useState<Book>();
+  const { book, loading } = useBook(isbn);
 
-  const fetchBook = useMemo(() => {
-    return async () => {
-      const response = await fetch(`http://localhost:4730/books/${isbn}`);
-      const result = await response.json();
-      setBook(result);
-
-      // await fetch()
-
-    };
-  }, [isbn])
-
-  useEffect(() => {
-    fetchBook()
-  }, [fetchBook, isbn])
+  if (loading === true) {
+    return (<div>Loading...</div>)
+  }
 
   return (
     <div>
